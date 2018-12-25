@@ -22,28 +22,26 @@ private fun booking(): Boolean {
     println("**************************************************")
     print("Please enter number of tickets:")
     ticket.totalTickets = scanner.nextInt()
-    if(ticket.totalTickets > 0) {
-        do {
-            if (ticket.numRoundTrip > ticket.totalTickets) {
-                println("Round-trip tickets > Total tickets")
-                print("Please re-enter round-trip tickets again:")
-            } else {
-                print("How many round-trip tickets:")
-            }
-            ticket.numRoundTrip = scanner.nextInt()
-        } while (ticket.numRoundTrip > ticket.totalTickets)
-        println("**************************************************")
-        println("****** Thank you for your order *******")
-        println("Total tickets: " + ticket.totalTickets)
-        println("Round-trip: " + ticket.numRoundTrip)
-        println("Total Price: $" + String.format("%,d", ticket.getTotalPrice()))
-        println("**************************************************")
-        return true
-    }else{
+    if(ticket.totalTickets <= 0) {
         println("End")
         println("**************************************************")
         return false
     }
+    do {
+        print("How many round-trip tickets:")
+        ticket.numRoundTrip = scanner.nextInt()
+        if (ticket.numRoundTrip <= ticket.totalTickets) {
+            break
+        }
+        println("Round-trip tickets > Total tickets !")
+    } while (true)
+    println("**************************************************")
+    println("****** Thank you for your order *******")
+    println("Total tickets: " + ticket.totalTickets)
+    println("Round-trip: " + ticket.numRoundTrip)
+    println("Total Price: $" + String.format("%,d", ticket.getTotalPrice()))
+    println("**************************************************")
+    return true
 }
 
 class Ticket (var totalTickets:Int = 0 , var numRoundTrip:Int = 0) {
