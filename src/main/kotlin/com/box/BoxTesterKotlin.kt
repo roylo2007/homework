@@ -1,24 +1,7 @@
 package com.box.kotlin
 
 fun main() {
-    boxSelect()
-}
-
-fun boxSelect() {
-    val boxes = mutableListOf(Box3(), Box5())
-
-    val length = requestInputValue("length")
-    val width = requestInputValue("width")
-    val height = requestInputValue("height")
-
-    run loop@ {
-        boxes.forEach {
-            if (it.validated(length, width, height)) {
-                print("Your selected box is ${it.name()} and the price is ${it.price()}")
-                return@loop
-            }
-        }
-    }
+   Box.select()
 }
 
 fun requestInputValue(unit:String) : Float {
@@ -31,6 +14,24 @@ fun requestInputValue(unit:String) : Float {
 }
 
 abstract class Box(var length:Float, var width:Float, var height:Float){
+
+    companion object {
+        @JvmStatic
+        fun select(){
+            val length = requestInputValue("length")
+            val width = requestInputValue("width")
+            val height = requestInputValue("height")
+            val boxes = mutableListOf(Box3(), Box5())
+            boxes.forEach {
+                if (it.validated(length, width, height)) {
+                    print("Your selected box is ${it.name()} and the price is $${it.price()}")
+                    return
+                }
+            }
+            print("No box match!")
+        }
+    }
+
     fun validated(length:Float, width:Float, height:Float) =
          (length <= this.length && width <= this.width && height <= this.height)
 
